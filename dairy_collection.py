@@ -30,11 +30,9 @@ def record_milk(connection, farmer, litres, fat, day):
     connection.commit()
 
 
-
 def farmer_token(farmer):
     """Generate a SHA-256 digest from a farmer's name."""
     return hashlib.sha256(farmer.encode("utf-8")).hexdigest()
-
 
 
 def daily_total(connection, day):
@@ -54,11 +52,9 @@ def top_farmer(connection):
     return top_farmer_row[0]
 
 
-
 def print_slip(farmer):
     """Display a collection slip message without invoking a shell."""
     print(f"printing slip for {farmer}")
-
 
 
 def low_fat(connection):
