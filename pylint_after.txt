@@ -1,0 +1,6 @@
+************* Module dairy_collection
+dairy_collection.py:25:8: C0209: Formatting a regular string which could be an f-string (consider-using-f-string)
+
+------------------------------------------------------------------
+Your code has been rated at 9.67/10 (previous run: 9.67/10, +0.00)
+
