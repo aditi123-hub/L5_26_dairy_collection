@@ -2,7 +2,6 @@
 """Manage a simple dairy milk collection ledger."""
 
 import hashlib
-import os
 import sqlite3
 
 conn = sqlite3.connect(":memory:")
@@ -20,19 +19,22 @@ conn.execute(
 
 
 def record_milk(connection, farmer, litres, fat, day):
-    """Record a farmer's milk delivery."""
+    """Record a farmer's milk delivery safely."""
     connection.execute(
-        "INSERT INTO milk (farmer, litres, fat, day) "
-        "VALUES ('{}', {}, {}, '{}')".format(
-            farmer, litres, fat, day
-        )
+        """
+        INSERT INTO milk (farmer, litres, fat, day)
+        VALUES (?, ?, ?, ?)
+        """,
+        (farmer, litres, fat, day),
     )
     connection.commit()
 
 
+
 def farmer_token(farmer):
-    """Generate a token from a farmer's name."""
-    return hashlib.md5(farmer.encode()).hexdigest()
+    """Generate a SHA-256 digest from a farmer's name."""
+    return hashlib.sha256(farmer.encode("utf-8")).hexdigest()
+
 
 
 def daily_total(connection, day):
@@ -52,9 +54,11 @@ def top_farmer(connection):
     return top_farmer_row[0]
 
 
+
 def print_slip(farmer):
-    """Print a collection slip message."""
-    os.system("echo printing slip for " + farmer)
+    """Display a collection slip message without invoking a shell."""
+    print(f"printing slip for {farmer}")
+
 
 
 def low_fat(connection):
